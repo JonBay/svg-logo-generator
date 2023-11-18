@@ -19,6 +19,7 @@
 
   ## Usage
   This project can be used to generate a logo for things you create or a favicon logo for websites.  A demonstration video can be found here.  
+  ![logo generator](https://github.com/JonBay/svg-logo-generator/assets/134355923/30de4629-d84c-42e0-a738-6ab57ee04ea0)
 
   ## License
     
