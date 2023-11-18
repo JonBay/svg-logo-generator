@@ -1,6 +1,8 @@
 const inquirer = require('inquirer');
 const fs = require('fs');
-const generateSvg = require('./utils/generateSvg');
+const generateSvg = require('./lib/generateSvg');
+const shapes = require('./lib/shapes'); 
+
 
 const questions =
   [
@@ -11,18 +13,18 @@ const questions =
       },
     {
       type: 'input',
-      name: 'text color',
+      name: 'textColor',
       message: 'Enter the color for your text as a color keyword or hexadecimal number.',
     },
     {
-      type: 'input',
+      type: 'list',
       name: 'shape',
       message: 'Pick a shape.',
       choices: ['Circle','Triangle','Square'],
     },
     {
       type: 'input',
-      name: 'shape color',
+      name: 'shapeColor',
       message: 'Enter the color for your shape as a color keyword or hexadecimal number.',
     },    
   ]
@@ -45,21 +47,21 @@ function writeToFile(fileName, data)
       });
   }
 
-// function to ask questions and run generatemarkdown
-function init() 
-  {
-    inquirer
-      .prompt(questions)
-      .then((response) => 
+// function to ask questions and run generateSvg
+function init() {
+  inquirer
+    .prompt(questions)
+    .then((response) => 
+      {
+        const { text, textColor, shape, shapeColor } = response;
+        const shapeInstance = shapes(shape); 
+        generateSvg(text, textColor, shape, shapeColor); 
+      })
+      .catch((err) => 
         {
-          const questionResponses = generatemarkdown(response);
-          writeToFile('README.md', questionResponses);
-        })
-        .catch((err) =>
-          {
-            console.error(err);
-          });
-  }
+        console.error(err);
+        });
+}
 
-//initilize app
+// initialize app
 init();
